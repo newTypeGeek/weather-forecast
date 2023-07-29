@@ -43,7 +43,8 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
         axis=1,
     )
     df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
-    df["timestamp"] = pd.DatetimeIndex(df["timestamp"]).tz_localize("Asia/Hong_Kong")
+    # we do not add timezone because HKT is chaanged from +07:36 to +08:00 in 1904
+    # making it diffcult to parse DatetimeIndex
 
     # "***" represents missing data
     df = df.replace({"***": np.nan})
