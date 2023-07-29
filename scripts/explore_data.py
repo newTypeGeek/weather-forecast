@@ -24,8 +24,8 @@ for file_path, setting in file_path_to_setting.items():
     with open(file_path, "r") as f:
         df = pd.read_csv(f)
 
-    df = df.set_index("timestamp")
-    df.index = pd.to_datetime(df.index)
+    df = df.set_index("date")
+    df.index = pd.DatetimeIndex(df.index)
 
     n_pct_missing = df.isna().sum().sum() / df.size * 100
     print(f"Percentage of missing data for {file_path} = {n_pct_missing:.5f}%")
