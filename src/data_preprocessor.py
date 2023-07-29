@@ -38,11 +38,11 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     )
 
     # format DatetimeIndex using year, month, day column
-    df["timestamp"] = df.apply(
+    df["date"] = df.apply(
         lambda x: f"{x['year']}-{str(int(x['month'])).zfill(2)}-{str(int(x['day'])).zfill(2)}",
         axis=1,
     )
-    df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
     # we do not add timezone because HKT is chaanged from +07:36 to +08:00 in 1904
     # making it diffcult to parse DatetimeIndex
 
@@ -57,7 +57,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df.dropna()
 
     # ensure timestamp is evenly spaced daily (since the raw data is supposed to be daily separated)
-    df = df.set_index("timestamp")
+    df = df.set_index("date")
     df = df.resample("1D").first().reset_index()
 
     return df
