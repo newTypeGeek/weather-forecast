@@ -1,3 +1,4 @@
+import loguru
 import numpy as np
 import pandas as pd
 
@@ -7,7 +8,18 @@ def read_raw_data(file_path: str) -> pd.DataFrame:
         # skip the first 2 rows since those are metadata
         df = pd.read_csv(f, skiprows=[0, 1])
 
+    loguru.logger.success(
+        "Successfully read raw data from csv file_path={file_path}", file_path=file_path
+    )
     return df
+
+
+def write_df_to_csv(df: pd.DataFrame, file_path: str) -> None:
+    with open(file_path, "w") as f:
+        df.to_csv(f, index=False)
+    loguru.logger.success(
+        "Successfully write dataframe to csv file_path={file_path}", file_path=file_path
+    )
 
 
 def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
