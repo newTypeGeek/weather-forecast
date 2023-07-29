@@ -55,4 +55,8 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df.drop(columns=["year", "month", "day", "data_completeness"])
     df = df.dropna()
 
+    # ensure timestamp is evenly spaced daily (since the raw data is supposed to be daily separated)
+    df = df.set_index("timestamp")
+    df = df.resample("1D").first().reset_index()
+
     return df
