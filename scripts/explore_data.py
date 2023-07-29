@@ -27,6 +27,8 @@ for file_path, setting in file_path_to_setting.items():
     df = df.set_index("timestamp")
     df.index = pd.to_datetime(df.index)
 
+    print("Percentage of missing data = {:.2f}%".format(df.isna().sum().sum() / df.size * 100))
+
     fig, ax = plt.subplots(figsize=(14, 6))
 
     df.plot(ax=ax)
